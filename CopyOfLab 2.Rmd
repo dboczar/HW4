@@ -1,0 +1,102 @@
+---
+title: "Lab 2"
+author: "Dylan"
+date: "February 12, 2018"
+output: html_document
+---
+###Exercize 1
+```{r}
+library(tidyverse)
+
+housing <- read.csv("http://colindawson.net/data/landdata-states.csv")
+
+hp2013ex1 <- housing %>% filter(Date == 2013.25)
+
+ggplot(hp2013ex1, aes(y = Home.Value, x = Land.Value)) + geom_point()
+```
+
+###Exercize 2
+```{r}
+home_value_plot <- ggplot(hp2013ex1, aes(y = Home.Value, x = Land.Value)) + geom_point()
+```
+
+###Exercize 3
+It doesn't make sense to connect the dots of a scatter plot.
+
+###Exercize 4
+```{r}
+home_value_plot + 
+    aes(color = Structure.Cost) +
+    geom_point()
+```
+
+##Exercize 5
+```{r}
+home_plot <- ggplot(housing, aes(y = State, x = Home.Price.Index)) +
+  geom_point(aes(color = Date),
+             alpha = 0.3,
+             size = 1.5,
+             position = position_jitter(width = 0, height = 0.25))
+#changing verical axis label
+home_plot <- home_plot +
+  scale_y_discrete(name = "State Abbreviation")
+#breaks and labels for x axis
+home_plot +
+  scale_color_continuous(breaks = c(1975.25, 1994.25, 2013.25), labels = c(1971, 1994, 2013))
+#changing red/blue high/low contrast
+home_plot <- home_plot +
+  scale_color_continuous(
+    breaks = c(1975.25, 1994.25, 2013.25),
+    labels = c(1971, 1994, 2013),
+    low = "blue", high = "red")
+home_plot
+#Three colors
+home_plot +
+  geom_vline(
+    aes(xintercept = 1),
+    linetype = 3,
+    color = "black") +
+  scale_color_gradient2(
+    breaks = c(1975.25, 1994.25, 2013.25),
+    labels = c(1971, 1994, 2013),
+    low = "blue", high = "red", mid = "gray60",
+    midpoint = 1994.25)
+```
+
+###Exercize 6
+```{r}
+home_plot +
+  scale_color_gradient2(
+    breaks = c(1975.25, 1994.25, 2013.25),
+    labels = c(1971, 1994, 2013),
+    low = "blue", high = "red", mid = "gray60",
+    midpoint = 1994.25) + 
+  geom_vline(
+    aes(xintercept = 1),
+    linetype = 3,
+    color = "black")
+```
+
+###Pre-Exercize 7
+```{r}
+#map State to color
+state_plot <- ggplot(housing, aes(x=Date, y=Home.Value)) 
+state_plot + geom_line(aes(color=State))
+#facet by state instead
+state_plot + geom_line() + 
+  facet_wrap(~State, ncol = 10)
+```
+
+##Turn in: Exercize 7
+Showing the swath of structural cost for houses over time by region.
+```{r}
+library(tidyverse)
+
+housing <- read.csv("http://colindawson.net/data/landdata-states.csv")
+
+costXdate <-ggplot(housing, aes(x=Date, y=Structure.Cost))
+
+regional_costXdate <- costXdate + geom_line() +
+  facet_wrap(~region, ncol=50)
+regional_costXdate
+```
