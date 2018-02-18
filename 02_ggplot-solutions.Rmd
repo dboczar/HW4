@@ -1,0 +1,155 @@
+---
+title: 'STAT 209: Lab2 Solutions'
+author: "Colin Dawson"
+date: "2/18/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+## We need the tidyverse package for this lab
+## which loads everything else we need in turn
+library(tidyverse)
+```
+
+First we need to read in the data on housing prices:
+
+```{r}
+housing <- read.csv("http://colindawson.net/data/landdata-states.csv")
+```
+
+We will use the filtered dataset consisting only of 2013-Q1.
+
+```{r}
+hp2013Q1 <- housing %>% filter(Date == 2013.25)
+```
+
+
+### Exercise 1
+
+Create a scatterplot of the value of each home in the first quarter of 2013 as a function of the value of the land.
+
+```{r}
+ggplot(
+  hp2013Q1, 
+  aes(y = Home.Value, x = Land.Value)
+  ) +
+geom_point()
+```
+
+### Exercise 2
+
+Store the scatterplot you created in the previous exercise as an object called `home_value_plot`.
+
+```{r}
+home_value_plot <- 
+  ggplot(
+    hp2013Q1, 
+    aes(y = Home.Value, x = Land.Value)
+    ) +
+  geom_point()
+```
+
+### Exercise 3
+Does it make sense to connect the observations with `geom_line()` in this case?  Do the lines help us understand the connections between the observations?  What do the lines represent?
+
+Here, the lines simply connect observations in consecutive rows of the data.  Since the observations are not in any particularly meaningful order in this dataset, it doesn't make sense to connect the dots.
+
+### Exercise 4
+
+In your `home_value_plot`, map color to the cost of the structure, and show your scatterplot.
+
+```{r}
+home_value_plot + 
+  aes(color = Structure.Cost) +
+  geom_point()
+```
+
+### Exercise 5
+
+Since a home price index of 1 is an important benchmark, it is worth highlighting as a contextual reference in our plot.  Use `geom_vline()` to add a dotted, black, vertical line to the plot we created above.
+
+The plot we created above is generated with the following code:
+```{r}
+home_plot <- 
+  ggplot(
+    housing, 
+    aes(y = State, x = Home.Price.Index)
+    ) +
+  geom_point(
+    aes(color = Date),
+    alpha = 0.3,
+    size = 1.5,
+    position = position_jitter(width = 0, height = 0.25)
+    ) +
+  scale_y_discrete(name = "State Abbreviation") +
+  scale_color_gradient2(
+    breaks = c(1975.25, 1994.25, 2013.25),
+    labels = c(1971, 1994, 2013),
+    low = "blue", high = "red", mid = "gray60",
+    midpoint = 1994.25)
+```
+
+
+```{r}
+home_plot +
+  geom_vline(
+    aes(xintercept = 1), 
+    linetype = 3, 
+    color = "black") + 
+  scale_color_gradient2(
+    breaks = c(1975.25, 1994.25, 2013.25),
+    labels = c(1971, 1994, 2013),
+    low = "blue", high = "red", mid = "gray60",
+    midpoint = 1994.25)
+```
+
+6. Recall that layers in `ggplot2` are added sequentially.  How would you put the dotted vertical line you created in the previous exercise _behind_ the data values?
+
+We can do this by changing the order of the components, moving the `geom_vline()` component to the end:
+
+```{r}
+home_plot +
+  scale_color_gradient2(
+    breaks = c(1975.25, 1994.25, 2013.25),
+    labels = c(1971, 1994, 2013),
+    low = "blue", high = "red", mid = "gray60",
+    midpoint = 1994.25) +
+  geom_vline(
+    aes(xintercept = 1), 
+    linetype = 3, 
+    color = "black")
+```
+
+7. Use a `facet_wrap` and/or `facet_grid` to create a data graphic of your choice that illustrates something interesting about home prices.
+
+This exercise is open-ended, so there are many possible plots we might be interested in creating.  We might first `glimpse()` the data again to see what variables we have available:
+
+```{r}
+glimpse(housing)
+```
+
+One thing that might be interesting to look at is how the share of house prices that is attributable to the value of the land itself has changed over time in different states.  We might expect that in states that have experienced greater population growth, particularly those with desirable cities, the price of housing would come to be driven more and more by the increasingly scarce land.
+
+Let's see if this seems to be true:
+```{r, fig.width = 12, fig.height = 12}
+land_value_plot <-
+  ggplot(
+    housing,
+    aes(x = Date, y = Land.Share..Pct.)
+  ) +
+  geom_line() +
+  facet_wrap(~State)
+land_value_plot
+```
+
+To help distinguish among different geographical regions, let's map region to color.
+
+```{r, fig.width = 12, fig.height = 12}
+land_value_plot +
+  geom_line(aes(color = region))
+```
+
+The predicted trend is very apparent in D.C. which is entirely an urban area.  Up through 2005 or so (roughly coinciding with the real estate bubble preceding the great recession), the land price as a share of total home price seemed to be on the rise in much of the West, Northeast, and parts of the South.  This didn't seem to happen as much in the Midwest.
+
+
