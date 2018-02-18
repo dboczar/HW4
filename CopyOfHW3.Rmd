@@ -1,0 +1,56 @@
+---
+title: 'STAT 209 HW3: Visualization Warmup'
+author: "Dylan Boczar"
+date: "2/15/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+##Exercise 1
+###Find a data visualization published online
+
+###     [Link: US Gun Killings in 2010](https://guns.periscopic.com/?year=2010)
+
+
+##Exercise 2
+###What is the data that are being visualized? Where did it come from?
+
+The visualization shows projected lifespans of victims of gun violence in the US in 2010. It represents a projected lifespan of each victim, as well as a projected alternate cause of death (selected using a distribution of data on deaths by age in the US). Each life is represented by an arc, which goes from being orange to grey when the arc reaches the age of the victim.
+The visualization also contains data on the gun type; the race, sex, and age group of the victim; the region of the US in which the victim was killed; whether the victim was a single victim or killed along with others; and the relationship of the victim with the killer. The visualization can be filtered by any of these factors.
+Finally, the visualization can show a distribution of individuals killed by age, overlayed with a distribution of their projected ages of death using data on the distribution of deaths by age in the US).
+
+The data on gun deaths come from the FBI's Uniform Crime Reports.
+The projected lifespans used data from the World Health Organization on the distribution of US deaths by age and cause. Each victim was assigned a likely age and cause of death weighted by this distribution. Life-expectancy was not weighted by demographic due to 'insufficient data.'
+
+
+##Exercise 3
+###Which data dimensions are mapped to which visual cues?
+
+The x-axis of the visualization represents age. 
+Each victim's lifespan (actual and projected) is represented by a single arc.
+The number of arcs helps represent the number of gun deaths (though arcs are overlayed, and that number is also shown on the side).
+The height of each arc is proportionate to the actual lifespan of the victim. 
+The length of each arc (where it touches down to reach the x-axis again) represents the victim's projected lifespan. 
+Each arc begins as a dull orange; the point the arc turns from that color to gray shows the age each victim died.
+Since arcs frequently overlap, heightened intensity (lightness) of orange or grey shows a greater overlap. This can be used to tell the magnitude of deaths (orange lightness) or projected deaths (gray lightness) at a particular age of gun-victim on the horizontal axis.
+An overlay of distributions shows similar information: an orange distribution shows the number of gun deaths at that age, with the vertical axis representing the number of deaths, and a gray distribution shows the number of projected deaths at that age for victims, with the vertical axis representing number of deaths. The 'area under the curve' for each represents the total number of victims.
+Each arc can be hovered over to view all information on that particular victim (demographic information, gun type, the age of the victim, and projected lifespan and cause of death).
+
+
+##Exercise 4
+###How does this inform your understanding of the data?
+
+How does this inform your understanding of the data?
+For me, the most informative parts of the visualization where the distribution overlays. The arcs are a powerful representation emotionally, but the overlapping intensity made them difficult to extract meaningful information from. On the other hand, the distributions, especially when separated by demographic variables, make it easy to tell how many people of a certain age were killed and how many of the victims would otherwise have died of natural causes at that age, as well as the proportional differences between ages. The comparison between the 'gun deaths' and 'potential lifespan' distributions helps to visualize the years of life stolen by gun violence (which is also listed at the side).
+
+
+##Exercise 5
+###1. What does the visualization do well?
+
+The animated creation of the arcs upon opening the webpage (and the correspondingly increasing tallies of victims and potential years lost) is quite emotionally powerful. It conveys the high number of gun deaths, as well as the span of time the could have been lived by these victims. The ability to separate the graphic by various variables (gun type, victim race, etc) allows a viewer to gather general and comparative understandings of 'gun deaths by age' based on those variables. The ability to hover over individual arcs and see demographic and projected information about a victim helps to humanize victims. The distribution overlays give clear comparative statistics on the data above. This is aided by the ability to hover over a section of the distribution and see the number of gun deaths vs. projected deaths at an age.
+
+###2. What would you change?
+
+While powerful, the arcs are not very informative, since each victim's "potential lifespan" is 'randomly' assigned (designated solely from a weighted lifespan distribution). This means that the length of any individual arc is fairly meaningless (though all together one can get a general idea of the expected distribution). A more meaningful representation would use the average life expectancy, broken down by demographic information to have some variation. That way, each arc's 'projected' information would be representative of the individual.
+In addition, it would be easier to compare variable categories if separate graphs could be created and compared side-by-side (rather than merely choosing which categories are shown above/below the horizontal axis line, as this limits the comparison to two 'graphs').
