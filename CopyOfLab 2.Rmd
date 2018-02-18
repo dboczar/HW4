@@ -14,14 +14,17 @@ hp2013ex1 <- housing %>% filter(Date == 2013.25)
 
 ggplot(hp2013ex1, aes(y = Home.Value, x = Land.Value)) + geom_point()
 ```
+*Follwed directions; same code*
 
 ###Exercize 2
 ```{r}
 home_value_plot <- ggplot(hp2013ex1, aes(y = Home.Value, x = Land.Value)) + geom_point()
 ```
+*Follwed directions; same code*
 
 ###Exercize 3
 It doesn't make sense to connect the dots of a scatter plot.
+*I didn't elaborate in my original lab, but it was clear just by briefly experimenting that there was no appreciable sequence to the data and that lines would be meaningless. Had it been in a useful order, a line would still be haphazard, and a regression line would be more informative.*
 
 ###Exercize 4
 ```{r}
@@ -29,6 +32,7 @@ home_value_plot +
     aes(color = Structure.Cost) +
     geom_point()
 ```
+*Follwed directions; same code*
 
 ##Exercize 5
 ```{r}
@@ -62,6 +66,7 @@ home_plot +
     low = "blue", high = "red", mid = "gray60",
     midpoint = 1994.25)
 ```
+*Almost the same code - but I did include scale_color_continuous in the home_plot (instead of scale_color_gradient2), likely because I was including all the code from the examples and it didn't seem wrong. There doesn't seem to a visual difference to me*
 
 ###Exercize 6
 ```{r}
@@ -76,6 +81,7 @@ home_plot +
     linetype = 3,
     color = "black")
 ```
+*Follwed directions; same code*
 
 ###Pre-Exercize 7
 ```{r}
@@ -100,3 +106,4 @@ regional_costXdate <- costXdate + geom_line() +
   facet_wrap(~region, ncol=50)
 regional_costXdate
 ```
+*I think this plot is along the lines of what you were looking for*
